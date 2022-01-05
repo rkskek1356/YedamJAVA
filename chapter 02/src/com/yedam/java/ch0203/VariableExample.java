@@ -3,15 +3,15 @@ package com.yedam.java.ch0203;
 public class VariableExample {
 
 	public static void main(String[] args) {
-		//자동 탙입 변환 : 값의 유효범위 小 - > 大
+		//�옄�룞 �깧�엯 蹂��솚 : 媛믪쓽 �쑀�슚踰붿쐞 弱� - > 鸚�
 		
 		byte byteValue = 10;
 		int intValue = byteValue;
 		System.out.println("intValue: " + intValue);
 		
-		char charValue = '가';
+//		char charValue = '媛�';
 		intValue = charValue;
-		System.out.println("가의 유니코드 : " + intValue);
+		System.out.println("媛��쓽 �쑀�땲肄붾뱶 : " + intValue);
 		
 		intValue = 50;
 		long longValue = intValue;
@@ -26,7 +26,7 @@ public class VariableExample {
 		System.out.println("doubleValue : " + doubleValue);
 		
 		System.out.println();
-		//강제 타입 변환
+		//媛뺤젣 ���엯 蹂��솚
 		intValue = 44032;
 		charValue = (char)intValue;
 		System.out.println(charValue);
@@ -40,13 +40,13 @@ public class VariableExample {
 		System.out.println(intValue);
 		
 		System.out.println();
-		//정수타입의 연산
+		//�젙�닔���엯�쓽 �뿰�궛
 		byte result = 10 + 20;
 		System.out.println(result);
 		
 		byte x = 10;
 		byte y = 20;
-		//byte result1 = x + y; 에러뜸
+		//byte result1 = x + y; �뿉�윭�쑙
 		int result2 = x + y;
 		System.out.println(result2);
 		
@@ -58,14 +58,14 @@ public class VariableExample {
 		System.out.println(result3);
 		
 		System.out.println();
-	    //실수타입의 연산
+	    //�떎�닔���엯�쓽 �뿰�궛
 		int intV1 = 10;
 		double doubleV1 = 5.5;
 		double resultValue = intV1 + doubleV1;
 		System.out.println(resultValue);
 		
 		System.out.println();
-		//연산식에서 자동 타입변환
+		//�뿰�궛�떇�뿉�꽌 �옄�룞 ���엯蹂��솚
 		
 		byte byteValue1 = 10;
 		byte byteValue2 = 20;
@@ -75,13 +75,13 @@ public class VariableExample {
 		char charValue1 = 'A';
 		char charValue2 = 1;
 		int resultValue2 = charValue1 + charValue2;
-		System.out.println("유니코드 : " + resultValue2);
-		System.out.println("출력문자 : " + (char)resultValue2);
+		System.out.println("�쑀�땲肄붾뱶 : " + resultValue2);
+		System.out.println("異쒕젰臾몄옄 : " + (char)resultValue2);
 		
 		System.out.println();
 		int intValue3 = 10;
 		int intValue4 = intValue3/4;
-		System.out.println(intValue4); // int가 정수이기때문에 소숫점부분은 모두 날려버림
+		System.out.println(intValue4); // int媛� �젙�닔�씠湲곕븣臾몄뿉 �냼�닽�젏遺�遺꾩� 紐⑤몢 �궇�젮踰꾨┝
 		
 		double doubleValue1 = intValue3/4.0;
 		System.out.println(doubleValue1);
@@ -90,13 +90,13 @@ public class VariableExample {
 		int x1 = 1;
 		int y1 = 2;
 		double result1 = x1/y1;
-		System.out.println(result1); // int값끼리의 계산이기때문에 0.5이지만 소숫점아래는 날려서 0으로 읽음
+		System.out.println(result1); // int媛믩겮由ъ쓽 怨꾩궛�씠湲곕븣臾몄뿉 0.5�씠吏�留� �냼�닽�젏�븘�옒�뒗 �궇�젮�꽌 0�쑝濡� �씫�쓬
 		
-		result1 = (double)x1 / y1; // 그래서 둘중에 하나라도 int가아닌 실수로 선언해야함
+		result1 = (double)x1 / y1; // 洹몃옒�꽌 �몮以묒뿉 �븯�굹�씪�룄 int媛��븘�땶 �떎�닔濡� �꽑�뼵�빐�빞�븿
 		System.out.println(result1);
 		
 		System.out.println();
-		//문자열 결합
+		//臾몄옄�뿴 寃고빀
 		int value = 10 + 2 + 8;
 		System.out.println(value);
 		
@@ -109,11 +109,11 @@ public class VariableExample {
 		String str3 = "10" + 2 + 8;
 		System.out.println(str3);
 		
-		String str4 = "10" + (2 + 8); // 1010이 나오게하기
+		String str4 = "10" + (2 + 8); // 1010�씠 �굹�삤寃뚰븯湲�
 		System.out.println(str4);		
 		
 		System.out.println();
-		//기본 타입과 문자열 간의 변환
+		//湲곕낯 ���엯怨� 臾몄옄�뿴 媛꾩쓽 蹂��솚
 		int var1 = Integer.parseInt("10");
 		double var2 = Double.parseDouble("3.14");
 		boolean var3 = Boolean.parseBoolean("true");
