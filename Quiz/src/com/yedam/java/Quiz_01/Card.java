@@ -2,17 +2,17 @@ package com.yedam.java.Quiz_01;
 
 public class Card {
 	
-	private static int serialNum = (int)(Math.random()*10000)+1;
+	private static int serialNum = 1;
 	private String name;
 	private int CardNo;
 	
 	public Card() {
-		serialNum = (int)(Math.random()*10000)+1;
+		serialNum++;
 		CardNo = serialNum;
 	}
 	
 	public Card(String name) {
-		serialNum = (int)(Math.random()*10000)+1;
+		serialNum++;
 		CardNo = serialNum;
 
 	}
