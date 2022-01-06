@@ -9,7 +9,7 @@ local.properties
 cmake-build-debug/
 
 # Mongo Explorer plugin:
-# Directories 
+# Directories #
 /build/
 /bin/
 target/
