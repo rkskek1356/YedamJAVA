@@ -10,8 +10,8 @@ public class VariableExample {
 		System.out.println("intValue: " + intValue);
 		
 //		char charValue = '媛�';
-		intValue = charValue;
-		System.out.println("媛��쓽 �쑀�땲肄붾뱶 : " + intValue);
+//		intValue = charValue;
+//		System.out.println("媛��쓽 �쑀�땲肄붾뱶 : " + intValue);
 		
 		intValue = 50;
 		long longValue = intValue;
@@ -28,8 +28,8 @@ public class VariableExample {
 		System.out.println();
 		//媛뺤젣 ���엯 蹂��솚
 		intValue = 44032;
-		charValue = (char)intValue;
-		System.out.println(charValue);
+//		charValue = (char)intValue;
+//		System.out.println(charValue);
 		
 		longValue = 500;
 		intValue = (int)longValue;
