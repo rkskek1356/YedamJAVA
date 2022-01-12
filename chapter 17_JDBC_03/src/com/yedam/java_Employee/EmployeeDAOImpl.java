@@ -1,67 +1,23 @@
-package com.yedam.java.App;
+package com.yedam.java_Employee;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeesDAO {
-	
-	//Sqlite 연결정보
-	String jdbc_driver = "org.sqlite.JDBC";
-	String jdbc_url = "jdbc:sqlite:/c:/DEV/workspace/YedamDataBase.db";
-	
-	//각 메소드에서 공통적으로 사용하는 필드
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	
+import com.yedam.java_Common.DAO;
+
+public class EmployeeDAOImpl extends DAO implements EmployeeDAO {
 	
 	//싱글톤
-	private static EmployeesDAO instance = new EmployeesDAO();
-	private EmployeesDAO() {}
-	
-	public static EmployeesDAO getInstance() {
+	private static EmployeeDAO instance = new EmployeeDAOImpl();
+	private EmployeeDAOImpl() {}
+	public static EmployeeDAO getInstance() {
 		return instance;
 	}
 	
-	//JDBC Driver 로딩
-	//DB 서버 접속
-	// -> connect() 메소드
-	public void connect() {
-		try {
-			Class.forName(jdbc_driver);
-			
-			conn = DriverManager.getConnection(jdbc_url);
-		} catch (ClassNotFoundException e) {
-			System.out.println("JDBC Driver 로딩 실패");
-		} catch (SQLException e) {
-			System.out.println("DB 접속 실패");
-		}
-		
-	}
 	
-	//자원해제 -> disconnect() 메소드
-	public void disconnect() {
-	try {
-		if(rs != null) rs.close();
-		if(pstmt != null) pstmt.close();
-		if(conn != null) conn.close();
-		
-	}catch(SQLException e) {
-		System.out.println("정상적으로 자원이 해제되지 않았습니다.");
-	}
-	}
-	//PreparedStatment 객체 생성
-	//SQL 실행
-	//결과값 출력 or 연산
-	// -> 각 CURD 메소드로 반복적으로 사용
-	
-	//전체조회
-	public List<Employee> selectAll(){
+	@Override
+	public List<Employee> selectAll() {
 		List<Employee> list = new ArrayList<>();
 		
 		try {
@@ -93,8 +49,9 @@ public class EmployeesDAO {
 		
 		return list;
 	}
-	
-	//단건조회
+
+
+	@Override
 	public Employee selectOne(int employeeId) {
 		Employee emp = null;
 		try {
@@ -126,8 +83,8 @@ public class EmployeesDAO {
 		}
 		return emp;
 	}
-	
-	//등록
+
+	@Override
 	public void insert(Employee emp) {
 		try {
 			connect();
@@ -154,9 +111,10 @@ public class EmployeesDAO {
 		}finally {
 			disconnect();
 		}
+
 	}
-	
-	//수정
+
+	@Override
 	public void update(Employee emp) {
 		try {
 			connect();
@@ -174,10 +132,10 @@ public class EmployeesDAO {
 		}finally {
 			disconnect();
 		}
+
 	}
-	
-	
-	//삭제
+
+	@Override
 	public void delete(int employeeId) {
 		try {
 			connect();
@@ -194,5 +152,18 @@ public class EmployeesDAO {
 		}finally {
 			disconnect();
 		}
+
+	}
+	
+	public void disconnect() {
+		try {
+			if(rs != null) rs.close();
+			if(pstmt != null) pstmt.close();
+			if(conn != null) conn.close();
+			
+		}catch(SQLException e) {
+			System.out.println("정상적으로 자원이 해제되지 않았습니다.");
+		}
+
 	}
 }
