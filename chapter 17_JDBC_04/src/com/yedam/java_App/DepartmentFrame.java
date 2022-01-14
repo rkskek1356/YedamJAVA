@@ -23,7 +23,7 @@ public class DepartmentFrame {
 			
 			//각 메뉴별 기능 실행
 			if(menuNo == 1) {
-				//등
+				//등록
 				insertDepartment();
 				
 			}else if(menuNo == 2){

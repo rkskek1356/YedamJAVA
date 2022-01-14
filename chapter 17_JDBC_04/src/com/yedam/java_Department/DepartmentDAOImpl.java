@@ -113,7 +113,7 @@ public class DepartmentDAOImpl extends DAO implements DepartmentDAO {
 			pstmt.setInt(1, departmentId);
 			
 			int result = pstmt.executeUpdate();
-			System.out.println(result + "건이 수정되었습니다.");
+			System.out.println(result + "건이 삭제되었습니다.");
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
