@@ -93,7 +93,7 @@ public class Game {
 	
 	@Override
 	public String toString() {
-		return "닉네임 : " + playerName + "\t점수 : " + playerPoint;
+		return "아이디 : " + playerId + "\t점수 : " + playerPoint;
 	}
 
 }

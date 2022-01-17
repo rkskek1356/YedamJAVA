@@ -1,7 +1,10 @@
 package com.yedam.java_Game;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.yedam.java_App.GameStartFrame;
 import com.yedam.java_Common.DAO;
 
 public class GameDAOImpl extends DAO implements GameDAO {
@@ -49,32 +52,7 @@ public class GameDAOImpl extends DAO implements GameDAO {
 
 	}
 
-	@Override
-	public Game selectGameInfo(String playerId) {
-		Game game = null;
-		try {
-			connect();
-			String select = "SELECT * FROM game WHERE player_id = ?";
-			pstmt = conn.prepareStatement(select);
-			pstmt.setString(1, playerId);
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				game = new Game();
-				game.setPlayerId(rs.getString("player_id"));
-				game.setPlayerPw(rs.getString("player_pw"));
-				game.setPlayerPoint(rs.getInt("player_point"));
-			}
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			disconnect();
-		}
-		return game;
-	}
-
+	
 	
 	@Override
 	public void updatePoint(Game game) {
@@ -85,13 +63,6 @@ public class GameDAOImpl extends DAO implements GameDAO {
 			pstmt.setInt(1, game.getPlayerPoint());
 			pstmt.setString(2, game.getPlayerId());
 			
-			int result = game.getPlayerPoint();
-			
-			if(result > 0) {
-				System.out.println("승점 10점 획득");
-			}else {
-				System.out.println("5점 잃으셨습니다.");
-			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -132,5 +103,125 @@ public class GameDAOImpl extends DAO implements GameDAO {
 		}
 
 	}
+	@Override
+	public void loginGame(Game game) {
+		try {
+			connect();
+			String login = "SELECT player_pw FROM game WHERE player_id = ?";
+			pstmt = conn.prepareStatement(login);
+			pstmt.setString(1, game.getPlayerId());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				if(rs.getString(1).contentEquals(game.getPlayerPw())) {
+					System.out.println("로그인 성공");
+				}else {
+					System.out.println("비밀번호가 틀렸습니다.");
+				}
+			}else {
+				System.out.println("아이디가 존재하지않습니다.");
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		
+	}
+	@Override
+	public void winGame(Game game) {
+		try {
+			connect();
+			String win = "UPDATE game SET player_point = player_point + ? WHERE player_id=?";
+			pstmt = conn.prepareStatement(win);
+			pstmt.setInt(1, game.getPlayerPoint());
+			pstmt.setString(2, game.getPlayerId());
+			
+			int result = pstmt.executeUpdate();
+			
+			if(result > 0) {
+				System.out.println("승리! 10점 획득하셨습니다.");
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		
+	}
+	@Override
+	public void loseGame(Game game) {
+		try {
+			connect();
+			String lose = "UPDATE game SET player_point = player_point + ? WHERE player_id=?";
+
+			pstmt = conn.prepareStatement(lose);
+			pstmt.setInt(1, game.getPlayerPoint());
+			pstmt.setString(2, game.getPlayerId());
+			
+			int result = pstmt.executeUpdate();
+			
+			if(result > 0) {
+				System.out.println("패배! 5점 잃으셨습니다.");
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		
+	}
+	@Override
+	public List<Game> selectAll() {
+		List<Game> list = new ArrayList<>();
+		try {
+			connect();
+			String select = "SELECT * FROM game ORDER BY player_id";
+			pstmt = conn.prepareStatement(select);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Game game = new Game();
+				game.setPlayerId(rs.getString("player_id"));
+				game.setPlayerPoint(rs.getInt("player_point"));
+				
+				list.add(game);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		return list;
+	}
+	@Override
+	public Game selectGameInfo(String player_id) {
+		Game game = null;
+		try {
+			connect();
+			String select = "SELECT * FROM game WHERE player_id = ?";
+			pstmt = conn.prepareStatement(select);
+			pstmt.setString(1, player_id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				game = new Game();
+				game.setPlayerId(rs.getString("player_id"));
+				game.setPlayerPw(rs.getString("player_pw"));
+				game.setPlayerPoint(rs.getInt("player_point"));
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			disconnect();
+		}
+		return game;
+	}
+
+	
 
 }
