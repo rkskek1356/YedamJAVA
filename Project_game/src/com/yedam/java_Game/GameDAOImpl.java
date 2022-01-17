@@ -20,23 +20,20 @@ public class GameDAOImpl extends DAO implements GameDAO {
 	public void createGame(Game game) {
 		try {
 			connect();
-			String insert = "INSERT INTO game (player_id, player_pw, player_name) VALUES(?,?,?)";
+			String insert = "INSERT INTO game VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(insert);
 			pstmt.setString(1, game.getPlayerId());
 			pstmt.setString(2, game.getPlayerPw());
 			pstmt.setString(3, game.getPlayerName());
-			
-			game.setPlayerPoint(0);
-			
-			game.setGameRcp(0);
-			game.setGameOe(0);
-			game.setGameTq(0);
-			game.setGameBj(0);
-			
-			game.setWinRcp(0);
-			game.setWinOe(0);
-			game.setWinTq(0);
-			game.setWinBj(0);
+			pstmt.setInt(4, 0);
+			pstmt.setInt(5, 0);
+			pstmt.setInt(6, 0);
+			pstmt.setInt(7, 0);
+			pstmt.setInt(8, 0);
+			pstmt.setInt(9, 0);
+			pstmt.setInt(10, 0);
+			pstmt.setInt(11, 0);
+			pstmt.setInt(12, 0);
 			
 			int result = pstmt.executeUpdate();
 			
@@ -56,44 +53,41 @@ public class GameDAOImpl extends DAO implements GameDAO {
 	
 	@Override
 	public void updatePoint(Game game) {
+//		try {
+//			connect();
+//			String update = "UPDATE game SET player_point = player_point + ? WHERE player_id = ?";
+//			pstmt = conn.prepareStatement(update);
+//			pstmt.setInt(1, game.getPlayerPoint());
+//			pstmt.setString(2, game.getPlayerId());
+//			System.out.printf(update);
+//			System.out.print(game.getPlayerPoint());
+//			System.out.printf(game.getPlayerId());
+//			
+//			
+//		}catch(SQLException e) {
+//			e.printStackTrace();
+//		}finally {
+//			disconnect();
+//		}
 		try {
 			connect();
-			String update = "UPDATE game SET player_point = player_point + ? WHERE player_id = ?";
+			String update = "UPDATE game SET player_point = ?,game_rcp=?, game_oe=?, game_tq=?, game_bj=?, win_rcp=?, win_oe=?, win_tq=?, win_bj=?  WHERE player_id = ? ";
 			pstmt = conn.prepareStatement(update);
 			pstmt.setInt(1, game.getPlayerPoint());
-			pstmt.setString(2, game.getPlayerId());
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			disconnect();
-		}
-
-	}
-
-	@Override
-	public void updateGame(Game game) {
-		try {
-			connect();
-			String update = "UPDATE game SET game_rcp = ?, game_oe = ?, game_tq = ?, game_bj = ? , win_rcp = ?, win_oe = ?, win_tq = ?, win_bj = ? WHERE player_id = ? ";
-			pstmt = conn.prepareStatement(update);
-			
-			pstmt.setInt(1, game.getGameRcp());
-			pstmt.setInt(2, game.getGameOe());
-			pstmt.setInt(3, game.getGameTq());
-			pstmt.setInt(4, game.getGameBj());
-			
-			pstmt.setInt(5, game.getWinRcp());
-			pstmt.setInt(6, game.getWinOe());
-			pstmt.setInt(7, game.getWinTq());
-			pstmt.setInt(8, game.getWinBj());
-			
-			pstmt.setString(9, game.getPlayerId());
+			pstmt.setInt(2, 0);
+			pstmt.setInt(3, 0);
+			pstmt.setInt(4, 0);
+			pstmt.setInt(5, 0);
+			pstmt.setInt(6, 0);
+			pstmt.setInt(7, 0);
+			pstmt.setInt(8, 0);
+			pstmt.setInt(9, 0);
+			pstmt.setString(10, game.getPlayerId());
 			
 			int result = pstmt.executeUpdate();
 			
 			if(result > 0) {
-				System.out.println("정상 처리되었습니다.");
+				System.out.println("업데이트되었습니다.");
 			}
 			
 		}catch(SQLException e) {
@@ -103,6 +97,8 @@ public class GameDAOImpl extends DAO implements GameDAO {
 		}
 
 	}
+
+	
 	@Override
 	public void loginGame(Game game) {
 		try {

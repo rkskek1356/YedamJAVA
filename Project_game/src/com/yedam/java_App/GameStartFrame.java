@@ -4,6 +4,7 @@ import java.net.ConnectException;
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.yedam.java_Game.Game;
 import com.yedam.java_Game.GameDAO;
@@ -30,25 +31,26 @@ public class GameStartFrame{
 				System.out.println("1.가위 | 2.바위 | 3.보 > ");
 				rcp = sc.nextInt();
 				if(num == rcp) {
-					System.out.println("비겼습니다!");
+					point(login, "draw");
+					System.out.println("비겼습니다!"+login.getPlayerPoint());
 				}else if((num == 1) && (rcp == 2)) {
-					System.out.println("이겼습니다!");
-					win();
+					point(login, "win");
+					System.out.println("이겼습니다!"+login.getPlayerPoint());
 				}else if((num == 1) && (rcp == 3)) {
-					System.out.println("졌습니다.");
-					lose();
+					point(login, "lose");
+					System.out.println("졌습니다."+login.getPlayerPoint());
 				}else if((num == 2) && (rcp == 1)) {
-					System.out.println("졌습니다.");
-					lose();
+					point(login, "lose");
+					System.out.println("졌습니다."+login.getPlayerPoint());
 				}else if((num == 2) && (rcp == 3)) {
-					System.out.println("이겼습니다!");
-					win();
+					point(login, "win");
+					System.out.println("이겼습니다!"+login.getPlayerPoint());
 				}else if((num == 3) && (rcp == 1)) {
-					System.out.println("이겼습니다!");
-					win();
+					point(login, "win");
+					System.out.println("이겼습니다!"+login.getPlayerPoint());
 				}else if((num == 3) && (rcp == 2)) {
-					System.out.println("졌습니다.");
-					lose();
+					point(login, "lose");
+					System.out.println("졌습니다."+login.getPlayerPoint());
 				}
 			}else if(menuNo == 2) {
 				int oe = 0;
@@ -59,16 +61,16 @@ public class GameStartFrame{
 				
 				if((num == 1) && (oe == 1)) {
 					System.out.println("정답입니다!");
-					win();
+					point(login, "win");
 				}else if((num == 1) && (oe == 2)){
 					System.out.println("틀렸습니다!");
-					lose();
+					point(login, "lose");
 				}else if((num == 2) && (oe == 1)) {
 					System.out.println("틀렸습니다!");
-					lose();
+					point(login, "lose");
 				}else if((num == 2) && (oe == 2)) {
 					System.out.println("정답입니다!");
-					win();
+					point(login, "win");
 				}
 			}else if(menuNo == 3) {
 				int count=0;
@@ -82,7 +84,6 @@ public class GameStartFrame{
 					
 				if(num == inputnum) {
 					System.out.println("정답입니다.");
-					win();
 					break;
 				}else if (num < inputnum){
 					System.out.println("정답보다 숫자가 높습니다.");
@@ -96,7 +97,6 @@ public class GameStartFrame{
 				
 				if(i == 0) {
 					System.out.println("실패! 다음에 다시 도전하세요");
-					lose();
 				}
 				}
 			}else if(menuNo == 4) {
@@ -131,19 +131,23 @@ public class GameStartFrame{
 		return menuNo;
 	}
 	
-	public void win() {
-		Game game = login();
-		
-		
-		
+	public void point(Game game, String res) {
+		switch(res){
+        	case "win":
+        		//점수 +10, 판수 +1, 승 수+1
+        		game.setPlayerPoint(game.getPlayerPoint() + 10);
+        		break;
+        	case "lose":
+        		//점수 -5, 판수 +1
+        		game.setPlayerPoint(game.getPlayerPoint() - 5);
+        		break;
+        	case "draw":
+        		//판수 +1
+        		break;
+		}
+		dao.updatePoint(game);
 	}
-	
-	public void lose() {
-		
-	}
-	
-	
-	
+
 	
 	public void rank() {
 		List<Game> list = dao.selectAll();
@@ -157,20 +161,9 @@ public class GameStartFrame{
 	
 	public void myRank() {
 		
-		Game game = dao.selectGameInfo(null);
-		
-			if(game != null) {
-			System.out.println(game);
-		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	public void end() {
 		System.out.println("로그아웃");

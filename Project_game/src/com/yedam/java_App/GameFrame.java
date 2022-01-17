@@ -86,7 +86,6 @@ public class GameFrame {
 	
 	public Game checkLoginInfo(Game game) {
 		Game login = dao.selectGameInfo(game.getPlayerId());
-		
 		if(login == null) {
 			System.out.println("해당 아이디가 존재하지 않습니다.");
 			return null;
